@@ -1,0 +1,7 @@
+0;Gtx 370 pian;Pian;2000
+0;Chitara B78;Instrumente cu corzi;3000
+0;Pian RF4;pian;4500
+0;Ukulele;Corzi;4000
+0;lool;instrument;234
+0;vioara;coarde;1400
+0;binoclu;ert;3456
