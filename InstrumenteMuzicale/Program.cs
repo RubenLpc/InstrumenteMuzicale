@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using InstrumenteMuzicale;
 
 namespace InstrumenteMuzicale
@@ -32,6 +33,7 @@ namespace InstrumenteMuzicale
                 Console.WriteLine("F. Afisare cumparari instrumente");
                 Console.WriteLine("G. Salvare cumparari instrumente");
                 Console.WriteLine("N. Cautare instrument dupa nume");
+                Console.WriteLine("O. Afisare instrumente sortate");
                 Console.WriteLine("X. Inchidere program");
 
                 Console.WriteLine("Alegeti o opțiune");
@@ -68,6 +70,10 @@ namespace InstrumenteMuzicale
                         Console.WriteLine("Introduceti numele instrumentului de cautat:");
                         string numeInstrumentCautat = Console.ReadLine();
                         CautareInstrumentDupaNume(adminInstrumente, numeInstrumentCautat);
+                        break;
+                    case "O":
+                        InstrumentMuzical[] instrumenteSortate = adminInstrumente.GetInstrumente(out _);
+                        AfisareInstrumenteSortate(instrumenteSortate);
                         break;
                     case "X":
                         return;
@@ -187,6 +193,22 @@ namespace InstrumenteMuzicale
                 Console.WriteLine($"Nu s-a gasit niciun instrument cu numele '{numeInstrumentCautat}'.");
             }
         }
+
+        public static void AfisareInstrumenteSortate(InstrumentMuzical[] instrumente)
+        {
+            var grupuriInstrumente = instrumente.GroupBy(instrument => char.ToUpper(instrument.Nume[0]));
+
+            foreach (var grup in grupuriInstrumente.OrderBy(grup => grup.Key))
+            {
+                Console.WriteLine($"Instrumente care încep cu litera '{grup.Key}':");
+                foreach (var instrument in grup.OrderBy(inst => inst.Nume))
+                {
+                    Console.WriteLine(instrument.Info());
+                }
+                Console.WriteLine();
+            }
+        }
+
     }
 }
 
