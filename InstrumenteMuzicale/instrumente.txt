@@ -5,3 +5,5 @@
 0;lool;instrument;234
 0;vioara;coarde;1400
 0;binoclu;ert;3456
+0;pian rg56;pian;3500
+0;Okulele;corzi;200

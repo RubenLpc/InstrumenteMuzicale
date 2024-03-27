@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministrareCumparareInstrumente_FisierText.cs" />
     <Compile Include="AdministrareInstrumente_FisierText.cs" />
     <Compile Include="AdministrareInstrumente_Memorie.cs" />
+    <Compile Include="CumparareInstrumentMuzical.cs" />
     <Compile Include="InstrumentMuzical.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
