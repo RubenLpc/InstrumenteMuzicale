@@ -69,8 +69,10 @@ namespace InstrumenteMuzicale
                     case "N":
                         Console.WriteLine("Introduceti numele instrumentului de cautat:");
                         string numeInstrumentCautat = Console.ReadLine();
-                        CautareInstrumentDupaNume(adminInstrumente, numeInstrumentCautat);
+                        InstrumentMuzical.CautareInstrumentDupaNume(adminInstrumente, numeInstrumentCautat);
                         break;
+
+
                     case "O":
                         InstrumentMuzical[] instrumenteSortate = adminInstrumente.GetInstrumente(out _);
                         AfisareInstrumenteSortate(instrumenteSortate);
@@ -173,26 +175,7 @@ namespace InstrumenteMuzicale
             }
         }
 
-        public static void CautareInstrumentDupaNume(AdministrareInstrumente_FisierText adminInstrumente, string numeInstrumentCautat)
-        {
-            InstrumentMuzical[] instrumente = adminInstrumente.GetInstrumente(out int nrInstrumente);
-            bool instrumentGasit = false;
-
-            foreach (InstrumentMuzical instrument in instrumente)
-            {
-                if (instrument != null && instrument.Nume.Equals(numeInstrumentCautat, StringComparison.OrdinalIgnoreCase))
-                {
-                    Console.WriteLine($"Instrumentul cu numele '{numeInstrumentCautat}' a fost gasit:");
-                    AfisareInstrument(instrument);
-                    instrumentGasit = true;
-                }
-            }
-
-            if (!instrumentGasit)
-            {
-                Console.WriteLine($"Nu s-a gasit niciun instrument cu numele '{numeInstrumentCautat}'.");
-            }
-        }
+       
 
         public static void AfisareInstrumenteSortate(InstrumentMuzical[] instrumente)
         {

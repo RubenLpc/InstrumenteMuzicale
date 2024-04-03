@@ -2,6 +2,29 @@
 
 namespace InstrumenteMuzicale
 {
+    public enum Culoare
+    {
+        Rosu,
+        Alb,
+        Negru,
+        Albastru,
+        Verde,
+        Galben,
+        Portocaliu
+      
+    }
+
+    [Flags]
+    public enum Optiuni
+    {
+        Transpose = 1,
+        Pedale = 2,
+        Bluetooth = 4,
+        USB = 8,
+        Recording = 16
+        
+    }
+
     public class InstrumentMuzical
     {
         //constante
@@ -21,6 +44,9 @@ namespace InstrumenteMuzicale
         public string Nume { get; set; }
         public string Tip { get; set; }
         public decimal Pret { get; set; }
+
+        public Culoare Culoare { get; set; }
+        public Optiuni Optiuni { get; set; }
 
         //contructor implicit
         public InstrumentMuzical()
@@ -66,6 +92,27 @@ namespace InstrumenteMuzicale
                 Pret.ToString());
 
             return obiectInstrumentPentruFisier;
+        }
+
+        public static void CautareInstrumentDupaNume(AdministrareInstrumente_FisierText adminInstrumente, string numeInstrumentCautat)
+        {
+            InstrumentMuzical[] instrumente = adminInstrumente.GetInstrumente(out int nrInstrumente);
+            bool instrumentGasit = false;
+
+            foreach (InstrumentMuzical instrument in instrumente)
+            {
+                if (instrument != null && instrument.Nume.Equals(numeInstrumentCautat, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"Instrumentul cu numele '{numeInstrumentCautat}' a fost gasit:");
+                    Console.WriteLine(instrument.Info());
+                    instrumentGasit = true;
+                }
+            }
+
+            if (!instrumentGasit)
+            {
+                Console.WriteLine($"Nu s-a gasit niciun instrument cu numele '{numeInstrumentCautat}'.");
+            }
         }
     }
 }
