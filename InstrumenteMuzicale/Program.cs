@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using InstrumenteMuzicale;
+using LibrarieModele;
+using NivelStocareDate;
 
 namespace InstrumenteMuzicale
 {
@@ -9,19 +12,31 @@ namespace InstrumenteMuzicale
     {
         static void Main()
         {
-            string folderProiect = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            string folderInstrumente = Path.Combine(folderProiect, "InstrumenteMuzicale");
-            string numeFisierInstrumente = "instrumente.txt";
-            string numeFisierCumparari = "cumparari_instrumente.txt";
-            string caleCompletaFisierInstrumente = Path.Combine(folderInstrumente, numeFisierInstrumente);
-            string caleCompletaFisierCumparari = Path.Combine(folderInstrumente, numeFisierCumparari);
+         
 
+
+
+            //AdministrareStudenti_Memorie adminStudenti = new AdministrareStudenti_Memorie();
+            string numeFisierInstrumente = ConfigurationManager.AppSettings["NumeFisier"];
+            string numeFisierCumparari = ConfigurationManager.AppSettings["NumeFisier2"]; 
+
+            string locatieFisierSolutie = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            // setare locatie fisier in directorul corespunzator solutiei
+            // astfel incat datele din fisier sa poata fi utilizate si de alte proiecte
+            string caleCompletaFisierInstrumente = Path.Combine(locatieFisierSolutie, numeFisierInstrumente);
+            string caleCompletaFisierCumparari = locatieFisierSolutie + "\\" + numeFisierCumparari;
             AdministrareInstrumente_FisierText adminInstrumente = new AdministrareInstrumente_FisierText(caleCompletaFisierInstrumente);
             AdministrareCumparareInstrumente_FisierText adminCumparari = new AdministrareCumparareInstrumente_FisierText(caleCompletaFisierCumparari);
+
+
             InstrumentMuzical instrumentNou = new InstrumentMuzical();
+            
             int nrInstrumente = 0;
             int nrCumparari = 0;
-
+            // acest apel ajuta la obtinerea numarului de studenti inca de la inceputul executiei
+            // astfel incat o eventuala adaugare sa atribuie un IdStudent corect noului student
+            adminInstrumente.GetInstrumente(out nrInstrumente);
+            adminCumparari.GetCumparari(out nrCumparari);
             string optiune;
             do
             {
@@ -54,7 +69,14 @@ namespace InstrumenteMuzicale
                     case "S":
                         adminInstrumente.AddInstrument(instrumentNou);
                         adminInstrumente.SalvareInstrumente();
+
+                        // Re-citirea fișierului pentru a obține lista actualizată de instrumente
+                        InstrumentMuzical[] instrumenteActualizate = adminInstrumente.GetInstrumente(out nrInstrumente);
+
+                        // Actualizarea variabilei nrInstrumente cu numărul actualizat de instrumente
+                        nrInstrumente = instrumenteActualizate.Length;
                         break;
+
                     case "P":
                         CumparareInstrumentMuzical cumparareNoua = CitireCumparareTastatura();
                         adminCumparari.AdaugaCumparare(cumparareNoua);
@@ -66,11 +88,14 @@ namespace InstrumenteMuzicale
                     case "G":
                         adminCumparari.SalvareCumparareInstrumente();
                         break;
+       
                     case "N":
                         Console.WriteLine("Introduceti numele instrumentului de cautat:");
                         string numeInstrumentCautat = Console.ReadLine();
-                        InstrumentMuzical.CautareInstrumentDupaNume(adminInstrumente, numeInstrumentCautat);
+                         // Variabila pentru a primi numarul de instrumente
+                        adminInstrumente.CautareInstrumentDupaNume(numeInstrumentCautat, out nrInstrumente);
                         break;
+
 
 
                     case "O":

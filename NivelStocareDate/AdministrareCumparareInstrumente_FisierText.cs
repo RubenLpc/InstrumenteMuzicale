@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using LibrarieModele;
 
-namespace InstrumenteMuzicale
+namespace NivelStocareDate
 {
     public class AdministrareCumparareInstrumente_FisierText
     {
@@ -11,7 +12,8 @@ namespace InstrumenteMuzicale
         public AdministrareCumparareInstrumente_FisierText(string numeFisier)
         {
             this.numeFisier = numeFisier;
-            // Dacă fișierul nu există, acesta va fi creat automat când se va încerca să se scrie în el
+            Stream streamFisierText = File.Open(numeFisier, FileMode.OpenOrCreate);
+            streamFisierText.Close();
         }
 
         public void AdaugaCumparare(CumparareInstrumentMuzical cumparare)

@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace InstrumenteMuzicale
+namespace LibrarieModele
 {
     public enum Culoare
     {
@@ -11,7 +15,7 @@ namespace InstrumenteMuzicale
         Verde,
         Galben,
         Portocaliu
-      
+
     }
 
     [Flags]
@@ -22,7 +26,7 @@ namespace InstrumenteMuzicale
         Bluetooth = 4,
         USB = 8,
         Recording = 16
-        
+
     }
 
     public class InstrumentMuzical
@@ -94,25 +98,6 @@ namespace InstrumenteMuzicale
             return obiectInstrumentPentruFisier;
         }
 
-        public static void CautareInstrumentDupaNume(AdministrareInstrumente_FisierText adminInstrumente, string numeInstrumentCautat)
-        {
-            InstrumentMuzical[] instrumente = adminInstrumente.GetInstrumente(out int nrInstrumente);
-            bool instrumentGasit = false;
-
-            foreach (InstrumentMuzical instrument in instrumente)
-            {
-                if (instrument != null && instrument.Nume.Equals(numeInstrumentCautat, StringComparison.OrdinalIgnoreCase))
-                {
-                    Console.WriteLine($"Instrumentul cu numele '{numeInstrumentCautat}' a fost gasit:");
-                    Console.WriteLine(instrument.Info());
-                    instrumentGasit = true;
-                }
-            }
-
-            if (!instrumentGasit)
-            {
-                Console.WriteLine($"Nu s-a gasit niciun instrument cu numele '{numeInstrumentCautat}'.");
-            }
-        }
+        
     }
 }

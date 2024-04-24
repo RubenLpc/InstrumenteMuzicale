@@ -1,7 +1,6 @@
 ﻿using System;
-using InstrumenteMuzicale;
-
-namespace InstrumenteMuzicale
+using LibrarieModele;
+namespace NivelStocareDate
 {
     public class AdministrareInstrumente_Memorie
     {
