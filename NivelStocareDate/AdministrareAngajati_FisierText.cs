@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using LibrarieModele;
 
 namespace NivelStocareDate
 {
-    public class AdministrareInstrumente_FisierText: IStocareDataInstrumente
+    public class AdministrareAngajati_FisierText : IStocareDataAngajati
     {
-        string numeFisierInstrumente { get; set; }
-        public AdministrareInstrumente_FisierText(string numeFisierInstrumente)
+        string numeFisierAngajati { get; set; }
+        public AdministrareAngajati_FisierText(string numeFisierAngajati)
         {
-            this.numeFisierInstrumente = numeFisierInstrumente;
-            Stream sFisierText = File.Open(numeFisierInstrumente, FileMode.OpenOrCreate);
+            this.numeFisierAngajati = numeFisierAngajati;
+            Stream sFisierText = File.Open(numeFisierAngajati, FileMode.OpenOrCreate);
             sFisierText.Close();
         }
-        public void AdaugaInstrument(InstrumentMuzical instrumentNou)
+        public void AdaugaAngajat(Angajat angajatNou)
         {
             try
             {
-                using (StreamWriter swFisierText = new StreamWriter(numeFisierInstrumente, true))
+                using (StreamWriter swFisierText = new StreamWriter(numeFisierAngajati, true))
                 {
-                    swFisierText.WriteLine(instrumentNou.ConversieLaSir_PentruScriereInFisier());
+                    swFisierText.WriteLine(angajatNou.ConversieLaSir_PentruScriereInFisier());
                 }
             }
             catch (IOException eIO)
@@ -33,19 +36,19 @@ namespace NivelStocareDate
                 throw new Exception("Eroare generică. Mesaj: " + eGen.Message);
             }
         }
-        public ArrayList GetInstrumente()
+        public ArrayList GetAngajati()
         {
-            ArrayList instrumente = new ArrayList();
+            ArrayList angajati = new ArrayList();
 
             try
             {
-                using (StreamReader sRead = new StreamReader(numeFisierInstrumente))
+                using (StreamReader sRead = new StreamReader(numeFisierAngajati))
                 {
                     string line;
                     while ((line = sRead.ReadLine()) != null)
                     {
-                        InstrumentMuzical instrumentDinFisier = new InstrumentMuzical(line);
-                        instrumente.Add(instrumentDinFisier);
+                        Angajat angajatDinFisier = new Angajat(line);
+                        angajati.Add(angajatDinFisier);
                     }
                 }
             }
@@ -58,22 +61,22 @@ namespace NivelStocareDate
                 throw new Exception("Eroare generică. Mesaj: " + eGen.Message);
             }
 
-            return instrumente;
+            return angajati;
         }
-        public InstrumentMuzical GetInstrument(string nume)
+        public Angajat GetAngajat(string numeEmail, string parola)
         {
-            ArrayList instrumente = new ArrayList();
+            ArrayList angajati = new ArrayList();
 
             try
             {
-                using (StreamReader sr = new StreamReader(numeFisierInstrumente))
+                using (StreamReader sr = new StreamReader(numeFisierAngajati))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        InstrumentMuzical studentDinFisier = new InstrumentMuzical(line);
-                        if (studentDinFisier.Nume == nume)
-                            return studentDinFisier;
+                        Angajat angajatDinFisier = new Angajat(line);
+                        if ((angajatDinFisier.nume == numeEmail || angajatDinFisier.email == numeEmail) && angajatDinFisier.parola == parola)
+                            return angajatDinFisier;
                     }
                 }
             }
@@ -88,23 +91,23 @@ namespace NivelStocareDate
 
             return null;
         }
-        public bool EditareInstrument(int index, InstrumentMuzical instrumentEditat)
+        public bool EditareAngajat(int index, Angajat angajatEditat)
         {
-            ArrayList instrumente = GetInstrumente();
+            ArrayList angajati = GetAngajati();
             bool actualizareCuSucces = false;
             try
             {
-                using (StreamWriter swFisierText = new StreamWriter(numeFisierInstrumente, false))
+                using (StreamWriter swFisierText = new StreamWriter(numeFisierAngajati, false))
                 {
-                    foreach (InstrumentMuzical instrument in instrumente)
+                    foreach (Angajat angajat in angajati)
                     {
-                        InstrumentMuzical instrumentPentruScrisInFisier = instrument;
+                        Angajat angajatPentruScrisInFisier = angajat;
 
-                        if (instrumente[index] == instrument)
+                        if (angajati[index] == angajat)
                         {
-                            instrumentPentruScrisInFisier = instrumentEditat;
+                            angajatPentruScrisInFisier = angajatEditat;
                         }
-                        swFisierText.WriteLine(instrumentPentruScrisInFisier.ConversieLaSir_PentruScriereInFisier());
+                        swFisierText.WriteLine(angajatPentruScrisInFisier.ConversieLaSir_PentruScriereInFisier());
                     }
                     actualizareCuSucces = true;
                 }
@@ -119,20 +122,20 @@ namespace NivelStocareDate
             }
             return actualizareCuSucces;
         }
-        public bool StergereInstrument(int index)
+        public bool StergeAngajat(int index)
         {
-            ArrayList instrumente = GetInstrumente();
+            ArrayList angajati = GetAngajati();
             bool actualizareCuSucces = false;
             int i = 0;
             try
             {
-                using (StreamWriter swFisierText = new StreamWriter(numeFisierInstrumente, false))
+                using (StreamWriter swFisierText = new StreamWriter(numeFisierAngajati, false))
                 {
-                    foreach (InstrumentMuzical instrument in instrumente)
+                    foreach (InstrumentMuzical angajat in angajati)
                     {
                         if (i != index)
                         {
-                            swFisierText.WriteLine(instrument.ConversieLaSir_PentruScriereInFisier());
+                            swFisierText.WriteLine(angajat.ConversieLaSir_PentruScriereInFisier());
                         }
                         i++;
                     }

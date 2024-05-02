@@ -5,66 +5,44 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LibrarieModele
-{
-    public enum Culoare
-    {
-        Rosu,
-        Alb,
-        Negru,
-        Albastru,
-        Verde,
-        Galben,
-        Portocaliu
-
-    }
-
-    [Flags]
-    public enum Optiuni
-    {
-        Transpose = 1,
-        Pedale = 2,
-        Bluetooth = 4,
-        USB = 8,
-        Recording = 16
-
-    }
-
-    public class InstrumentMuzical
-    {
-        //constante
+{  public class InstrumentMuzical
+    {       //constante
         private const char SEPARATOR_PRINCIPAL_FISIER = ';';
         private const char SEPARATOR_SECUNDAR_FISIER = ' ';
 
         private const int ID = 0;
-        private const int NUME = 1;
-        private const int TIP = 2;
-        private const int PRET = 3;
+        private const int COD = 1;
+        private const int CANTITATE = 2;
+        private const int NUME = 3;
+        private const int TIP = 4;
+        private const int PRET = 5;
 
         // data membra privata
-        private string[] tipuri;
+        public enum TipInstrument
+        {
+            Coardă = 1,
+            Clape = 2,
+            Suflat = 3,
+            Percuție = 4,
+            End = 5,
+        }
 
         //proprietati auto-implemented
-        public int IdInstrument { get; set; } //identificator unic instrument muzical
+        public static int IdUltimul { get; set; }
+        public int Id { get; set; }
         public string Nume { get; set; }
-        public string Tip { get; set; }
+        public int cod { get; set; }
         public decimal Pret { get; set; }
-
-        public Culoare Culoare { get; set; }
-        public Optiuni Optiuni { get; set; }
+        public int cantitate { get; set; }
+        public TipInstrument Tip { get; set; }
 
         //contructor implicit
         public InstrumentMuzical()
         {
-            Nume = Tip = string.Empty;
-        }
-
-        //constructor cu parametri
-        public InstrumentMuzical(int idInstrument, string nume, string tip, decimal pret)
-        {
-            this.IdInstrument = idInstrument;
-            this.Nume = nume;
-            this.Tip = tip;
-            this.Pret = pret;
+            Nume = string.Empty;
+            cod = 0;
+            IdUltimul++;
+            Id = IdUltimul;
         }
 
         //constructor cu un singur parametru de tip string care reprezinta o linie dintr-un fisier text
@@ -73,31 +51,27 @@ namespace LibrarieModele
             string[] dateFisier = linieFisier.Split(SEPARATOR_PRINCIPAL_FISIER);
 
             //ordinea de preluare a campurilor este data de ordinea in care au fost scrise in fisier prin apelul implicit al metodei ConversieLaSir_PentruFisier()
-            this.IdInstrument = Convert.ToInt32(dateFisier[ID]);
+            this.Id = Convert.ToInt32(dateFisier[ID]);
             this.Nume = dateFisier[NUME];
-            this.Tip = dateFisier[TIP];
+            this.Tip = (TipInstrument)Convert.ToInt32(dateFisier[TIP]);
             this.Pret = Convert.ToDecimal(dateFisier[PRET]);
+            cantitate = Convert.ToInt32(dateFisier[CANTITATE]);
+            IdUltimul = Id;
+            this.cod = Convert.ToInt32(dateFisier[COD]);
         }
 
-        public string Info()
+        public string ConversieLaSir_PentruAfisare()
         {
-            string info = $"Id:{IdInstrument} Nume:{Nume ?? " NECUNOSCUT "} Tip: {Tip ?? " NECUNOSCUT "} Pret: {Pret}";
+            string info = $"Id:{Id}, cod: {cod}, cantitate: {cantitate} Nume:{Nume ?? " NECUNOSCUT "} Tip: {(TipInstrument)Tip} Pret: {Pret}";
 
             return info;
         }
 
-        public string ConversieLaSir_PentruFisier()
+        public string ConversieLaSir_PentruScriereInFisier()
         {
-            string obiectInstrumentPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}",
-                SEPARATOR_PRINCIPAL_FISIER,
-                IdInstrument.ToString(),
-                (Nume ?? " NECUNOSCUT "),
-                (Tip ?? " NECUNOSCUT "),
-                Pret.ToString());
-
-            return obiectInstrumentPentruFisier;
+            return string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}", SEPARATOR_PRINCIPAL_FISIER, Id, cod, cantitate, Nume, (int)Tip, Pret);
         }
 
-        
+
     }
 }

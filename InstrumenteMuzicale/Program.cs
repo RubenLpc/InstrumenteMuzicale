@@ -14,7 +14,7 @@ namespace InstrumenteMuzicale
         {
          
 
-
+            /*
 
             //AdministrareStudenti_Memorie adminStudenti = new AdministrareStudenti_Memorie();
             string numeFisierInstrumente = ConfigurationManager.AppSettings["NumeFisier"];
@@ -215,6 +215,7 @@ namespace InstrumenteMuzicale
                 }
                 Console.WriteLine();
             }
+            */
         }
 
     }

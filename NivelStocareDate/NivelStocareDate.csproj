@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministrareAngajati_FisierText.cs" />
     <Compile Include="AdministrareCumparareInstrumente_FisierText.cs" />
     <Compile Include="AdministrareInstrumente_FisierText.cs" />
     <Compile Include="AdministrareInstrumente_Memorie.cs" />
+    <Compile Include="IStocareDataAngajati.cs" />
+    <Compile Include="IStocareDataInstrumente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
