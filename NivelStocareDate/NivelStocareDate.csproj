@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministrareAngajati_FisierText.cs" />
-    <Compile Include="AdministrareCumparareInstrumente_FisierText.cs" />
     <Compile Include="AdministrareInstrumente_FisierText.cs" />
     <Compile Include="AdministrareInstrumente_Memorie.cs" />
     <Compile Include="IStocareDataAngajati.cs" />

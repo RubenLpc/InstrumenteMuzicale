@@ -95,8 +95,8 @@ namespace InterfataUtilizator_WindowsForms
             if (listBoxInstrumente.SelectedIndex != -1)
             {
                 int i = listBoxInstrumente.SelectedIndex;
-                ArrayList medicamente = adminInstrumente.GetInstrumente();
-                InstrumentMuzical instrumentSelectat = (InstrumentMuzical)medicamente[i];
+                ArrayList instrumente = adminInstrumente.GetInstrumente();
+                InstrumentMuzical instrumentSelectat = (InstrumentMuzical)instrumente[i];
                 InstrumentMuzical instrumentComanda = instrumentSelectat;
 
                 bool isInt = Int32.TryParse(textBoxCantitate.Text, out int cantitate);

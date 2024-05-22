@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Angajat.cs" />
-    <Compile Include="CumparareInstrumentMuzical.cs" />
     <Compile Include="InstrumentMuzical.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

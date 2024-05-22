@@ -11,13 +11,13 @@ namespace InterfataUtilizator_WindowsForms
     public static class StocareFactory
     {
         private const string FORMAT_SALVARE = "FormatSalvare";
-        private const string NUME_FISIER_MEDICAMENTE = "NumeFisierMedicamente";
+        private const string NUME_FISIER_INSTRUMENTE = "NumeFisierInstrumente";
         private const string NUME_FISIER_ANGAJATI = "NumeFisierAngajati";
 
         public static IStocareDataInstrumente GetAdministratorStocareInstrumente()
         {
             var formatSalvare = ConfigurationManager.AppSettings[FORMAT_SALVARE];
-            var numeFisierInstrumente = ConfigurationManager.AppSettings[NUME_FISIER_MEDICAMENTE];
+            var numeFisierInstrumente = ConfigurationManager.AppSettings[NUME_FISIER_INSTRUMENTE];
 
             if (formatSalvare != null)
             {

@@ -33,7 +33,7 @@ namespace InterfataUtilizator_WindowsForms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            afisareMedicamte();
+            afisareInstrumente();
             FreeData();
         }
 
@@ -233,7 +233,7 @@ namespace InterfataUtilizator_WindowsForms
                     if (adminInstrumente.StergereInstrument(index) == true)
                     {
                         labelStatus.Text = "Instrumentul a fost șters cu succes!";
-                        afisareMedicamte();
+                        afisareInstrumente();
 
                     }
                 }
@@ -291,7 +291,7 @@ namespace InterfataUtilizator_WindowsForms
         {
 
         }
-        private void afisareMedicamte()
+        private void afisareInstrumente()
         {
             ArrayList instrumente = adminInstrumente.GetInstrumente();
 
